@@ -50,7 +50,6 @@ class Board:
         fen = Fen()
         board = fen.build_board_from_fen()
 
-
         for row in range(ROWS):
             for col in range(COLS):
                 self.squares[row][col] = Square(row, col, board[row][col])

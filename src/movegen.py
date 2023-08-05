@@ -8,7 +8,7 @@ class MoveGen:
         pass
 
     def _is_valid_square(self, row, col):
-        if row < 0 or row > 7 or col < 0 or col > 7:
+        if row < 0 or row >= 8 or col < 0 or col >= 8:
             return False
         return True
     
@@ -121,9 +121,7 @@ class MoveGen:
             if end_piece == NullPiece().id:
                 moves.append(Move(Square(row, col), Square(end_row, end_col)))
             
-            elif end_piece.color_name != board.turn:
+            if board.squares[end_row][end_col].has_piece() and end_piece.color_name != board.turn:
                 moves.append(Move(Square(row, col), Square(end_row, end_col)))
 
-        print(moves)
-        
         return moves

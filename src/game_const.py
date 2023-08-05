@@ -22,4 +22,8 @@ KNIGHT_DIRS = [
     (-2, 1), # up right
     (-1, 2), # right up
     (1, 2), # right down
+    (2, 1), # down right
+    (2, -1), # down left
+    (1, -2), # left down
+    (-1, -2), # left up
 ]
