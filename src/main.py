@@ -11,7 +11,7 @@ from move import Move
 
 coloredlogs.install(fmt='%(asctime)s | %(levelname)s - %(message)s',
                     datefmt='%d-%b-%y %H:%M:%S', level='DEBUG')
-logging.disable(logging.CRITICAL)
+# logging.disable(logging.CRITICAL)
 
 
 class Main:
