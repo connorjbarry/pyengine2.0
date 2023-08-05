@@ -1,10 +1,17 @@
 import pygame
 import sys
+import logging
+import coloredlogs
 
 from game_const import *
 from game import Game
 from square import Square
 from move import Move
+
+
+coloredlogs.install(fmt='%(asctime)s | %(levelname)s - %(message)s',
+                    datefmt='%d-%b-%y %H:%M:%S', level='DEBUG')
+
 
 class Main:
 
@@ -22,9 +29,15 @@ class Main:
         screen = self.screen
         board = self.game.board
         drag_client = self.game.drag_client
-        
+
+
+        logging.info("Generating Initial State Moves...")
         moves = board.mg.generate_moves(board)
         
+        logging.info("Starting Game Loop...")
+        logging.info(f"{board.turn}'s turn")
+
+
         while True:
             game.show_bg(screen)
             game.highlight_moves(screen, moves, self.selected_square)
@@ -75,9 +88,11 @@ class Main:
                         if initial != final and temp_piece.color_name == board.turn:
                             if move in moves:
                                 board.move(temp_piece, move)
+                                logging.warning(f'Move made -- {move}')
                                 self.selected_square = ()
                                 self.player_clicks = []
                                 temp_piece = None
+                                logging.info("Re-generating moves...")
                                 moves = board.mg.generate_moves(board)
                 
                 elif event.type == pygame.MOUSEMOTION:
@@ -104,11 +119,13 @@ class Main:
                         if initial != final and drag_client.piece.color_name == board.turn:
                             if move in moves:
                                 board.move(drag_client.piece, move)
+                                logging.warning(f'Move made -- {move}')
                                 game.show_bg(screen)
                                 game.highlight_moves(screen, moves, self.selected_square)
                                 game.show_pieces(screen)
                                 self.selected_square = ()
                                 self.player_clicks = []
+                                logging.info("Re-generating moves...")
                                 moves = board.mg.generate_moves(board)
                     
                     drag_client.undrag_piece()
@@ -116,8 +133,10 @@ class Main:
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_u:
                         board.undo_move(temp_piece, move)
+                        logging.warning(f'Undoing move -- {move}')
                         self.selected_square = ()
                         self.player_clicks = []
+                        logging.info("Re-generating moves...")
                         moves = board.mg.generate_moves(board)
 
                 elif event.type == pygame.QUIT:
