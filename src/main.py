@@ -11,6 +11,7 @@ from move import Move
 
 coloredlogs.install(fmt='%(asctime)s | %(levelname)s - %(message)s',
                     datefmt='%d-%b-%y %H:%M:%S', level='DEBUG')
+logging.disable(logging.CRITICAL)
 
 
 class Main:
@@ -87,7 +88,7 @@ class Main:
 
                         if initial != final and temp_piece.color_name == board.turn:
                             if move in moves:
-                                board.move(temp_piece, move)
+                                board.move(move)
                                 logging.warning(f'Move made -- {move}')
                                 self.selected_square = ()
                                 self.player_clicks = []
@@ -118,7 +119,7 @@ class Main:
 
                         if initial != final and drag_client.piece.color_name == board.turn:
                             if move in moves:
-                                board.move(drag_client.piece, move)
+                                board.move(move)
                                 logging.warning(f'Move made -- {move}')
                                 game.show_bg(screen)
                                 game.highlight_moves(screen, moves, self.selected_square)
@@ -132,7 +133,7 @@ class Main:
 
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_u:
-                        board.undo_move(temp_piece, move)
+                        board.undo_move()
                         logging.warning(f'Undoing move -- {move}')
                         self.selected_square = ()
                         self.player_clicks = []

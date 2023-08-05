@@ -12,14 +12,19 @@ class Board:
         self._place_pieces()
         self.turn = "white"
         self.mg = MoveGen()
+        self.movelog = []
 
-    def move(self, piece, move):
+    def move(self, move):
         initial = move.initial
         final = move.final
+
+        piece = self.squares[initial.row][initial.col].piece
 
         move.captured_piece = self.squares[final.row][final.col].piece
         self.squares[final.row][final.col].piece = piece
         self.squares[initial.row][initial.col].piece = NullPiece().id
+
+        self.movelog.append(move)
 
         piece.moved = True
 
@@ -27,12 +32,14 @@ class Board:
 
         self.turn = "black" if self.turn == "white" else "white"
 
-    def undo_move(self, piece, move):
-        initial = move.initial
-        final = move.final
-
-        self.squares[initial.row][initial.col].piece = piece
-        self.squares[final.row][final.col].piece = move.captured_piece
+    def undo_move(self):
+        if len(self.movelog) == 0:
+            return
+        
+        move = self.movelog.pop()
+        piece = self.squares[move.final.row][move.final.col].piece
+        self.squares[move.initial.row][move.initial.col].piece = piece
+        self.squares[move.final.row][move.final.col].piece = move.captured_piece
 
         piece.moved = False
 

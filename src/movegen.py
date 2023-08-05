@@ -51,6 +51,9 @@ class MoveGen:
                 elif isinstance(piece, Piece) and (piece == Knight("white") or piece == Knight("black")):
                     moves.extend(self.generate_knight_moves(row, col, board))
 
+                # elif isinstance(piece, Piece) and (piece == King("white") or piece == King("black")):
+                #     moves.extend(self.generate_king_moves(row, col, board))
+
         return moves
                 
 
@@ -125,3 +128,6 @@ class MoveGen:
                 moves.append(Move(Square(row, col), Square(end_row, end_col)))
 
         return moves
+    
+    def generate_king_moves(self, row, col, board):
+        pass
