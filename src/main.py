@@ -25,8 +25,8 @@ class Main:
         self.player_clicks = []
         pygame.display.set_caption("Chess")
         self.game = Game()
-        self.playing_white = False
-        self.playing_black = False
+        self.playing_white = True
+        self.playing_black = True
         self.running = True
         self.game_over = False
         self.ai = AI(self.game.board)
