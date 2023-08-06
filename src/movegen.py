@@ -52,7 +52,7 @@ class MoveGen:
                     moves.extend(self.generate_knight_moves(row, col, board))
 
                 elif isinstance(piece, Piece) and (piece == King("white") or piece == King("black")):
-                    moves.extend(self.generate_king_moves(row, col, board))
+                    moves.extend(self.generate_king_moves(row, col, board, SLIDING_DIRS[0:8]))
 
         return moves
                 
@@ -129,7 +129,24 @@ class MoveGen:
 
         return moves
     
-    def generate_king_moves(self, row, col, board):
+    def generate_king_moves(self, row, col, board, dirs):
         moves = []
+        for dir in dirs:
+            for length in range(1,2):
+                end_row = row + dir[0] * length
+                end_col = col + dir[1] * length
 
+                if not self._is_valid_square(end_row, end_col):
+                    break
+
+                end_piece = board.squares[end_row][end_col].piece
+
+                if end_piece == NullPiece().id:
+                    moves.append(Move(Square(row, col), Square(end_row, end_col)))
+                
+                elif end_piece.color_name != board.turn:
+                    moves.append(Move(Square(row, col), Square(end_row, end_col)))
+                    break
+                
+                else: break
         return moves
