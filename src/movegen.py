@@ -36,22 +36,22 @@ class MoveGen:
             for col in range(COLS):
                 piece = board.squares[row][col].piece
             
-                if isinstance(piece, Piece) and (piece == Pawn("white") or piece == Pawn("black")):
+                if isinstance(piece, Piece) and (piece == Pawn(board.turn)):
                     moves.extend(self.generate_pawn_moves(row, col, board))
 
-                elif isinstance(piece, Piece) and (piece == Rook("white") or piece == Rook("black")):
+                elif isinstance(piece, Piece) and (piece == Rook(board.turn)):
                     moves.extend(self.generate_sliding_moves(row, col, board, SLIDING_DIRS[0:4]))
 
-                elif isinstance(piece, Piece) and (piece == Bishop("white") or piece == Bishop("black")):
+                elif isinstance(piece, Piece) and (piece == Bishop(board.turn)):
                     moves.extend(self.generate_sliding_moves(row, col, board, SLIDING_DIRS[4:8]))
                 
-                elif isinstance(piece, Piece) and (piece == Queen("white") or piece == Queen("black")):
+                elif isinstance(piece, Piece) and (piece == Queen(board.turn)):
                     moves.extend(self.generate_sliding_moves(row, col, board, SLIDING_DIRS[0:8]))
 
-                elif isinstance(piece, Piece) and (piece == Knight("white") or piece == Knight("black")):
+                elif isinstance(piece, Piece) and (piece == Knight(board.turn)):
                     moves.extend(self.generate_knight_moves(row, col, board))
 
-                elif isinstance(piece, Piece) and (piece == King("white") or piece == King("black")):
+                elif isinstance(piece, Piece) and (piece == King(board.turn)):
                     moves.extend(self.generate_king_moves(row, col, board, SLIDING_DIRS[0:8]))
 
         return moves
